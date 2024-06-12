@@ -1281,7 +1281,7 @@ class ParsedPacketBase(ABC, BaseModel):
 
     @computed_field
     def mwings_version(self) -> str:
-        return metadata.version("mwings")
+        return metadata.version(__name__.split(".")[0])
 
     @computed_field
     def hostname(self) -> str:

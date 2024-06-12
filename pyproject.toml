@@ -1,7 +1,7 @@
 # -*- mode: conf -*-
 [tool.poetry]
 name = "mwings"
-version = "1.0.7"
+version = "1.0.8"
 description = "Communicate with TWELITE wireless modules"
 authors = ["Mono Wireless Inc. <mono-oss@mono-wireless.com>"]
 license = "MW-OSSLA"
