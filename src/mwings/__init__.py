@@ -309,6 +309,17 @@ class Twelite(Thread):
 
         self.__event_emitter.add_listener(event, handler)
 
+    def remove_all_listeners(self, event: common.PacketType | None) -> None:
+        """Remove all handlers for receicing packets
+
+        Parameters
+        ----------
+        event : common.PacketType
+            Identifier for packets to receive
+        """
+
+        self.__event_emitter.remove_all_listeners(event)
+
     def on(
         self, event: common.PacketType
     ) -> Callable[[common.SomeCallable], common.SomeCallable]:

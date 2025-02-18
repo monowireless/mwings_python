@@ -19,6 +19,8 @@ class ParsedPacket(common.ParsedPacketBase):
 
     Attributes
     ----------
+    ai1_voltage: common.UInt16
+        Voltage for AI1 port in mV
     temp_100x: common.Int16
         100x temperature in °C
     humid_100x: common.UInt16
@@ -29,6 +31,7 @@ class ParsedPacket(common.ParsedPacketBase):
         True if the magnet state was changed
     """
 
+    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3600)
     temp_100x: common.Int16 = Field(default=0, ge=-4000, le=12500)
     humid_100x: common.UInt16 = Field(default=0, ge=0, le=10000)
     magnet_state: common.MagnetState = Field(default=common.MagnetState.NOT_DETECTED)
@@ -114,6 +117,7 @@ class PacketParser(common.PacketParserBase):
             "source_logical_id": bare_packet.u8_at(11),
             "lqi": bare_packet.u8_at(4),
             "supply_voltage": bare_packet.u16_at(34),
+            "ai1_voltage": bare_packet.u16_at(40),
             "temp_100x": bare_packet.i16_at(51),
             "humid_100x": bare_packet.u16_at(57),
             "magnet_state": common.MagnetState(bare_packet.u8_at(46) & 0x0F),

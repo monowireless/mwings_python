@@ -19,6 +19,8 @@ class ParsedPacket(common.ParsedPacketBase):
 
     Attributes
     ----------
+    ai1_voltage: common.UInt16
+        Voltage for AI1 port in mV
     sample_count: common.UInt8
         Number of accel samples
     samples_x: common.TimeSeries[common.Int16]
@@ -37,6 +39,7 @@ class ParsedPacket(common.ParsedPacketBase):
         True if the magnet state was changed
     """
 
+    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3600)
     sample_count: common.UInt8 = Field(default=10, ge=10, le=10)
     samples_x: common.TimeSeries[common.Int16] = Field(
         default=common.TimeSeries[common.Int16](
@@ -155,6 +158,7 @@ class PacketParser(common.PacketParserBase):
             "source_logical_id": bare_packet.u8_at(11),
             "lqi": bare_packet.u8_at(4),
             "supply_voltage": bare_packet.u16_at(34),
+            "ai1_voltage": bare_packet.u16_at(40),
             "sample_count": 10,
             "samples_x": common.TimeSeries[common.Int16](
                 10,
