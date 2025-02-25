@@ -7,7 +7,8 @@
 from enum import IntEnum, auto
 from threading import Thread, Event
 from datetime import timezone, tzinfo
-from typing import Any, Callable, overload, final
+from typing import Any, Callable, Self, overload, final
+from types import TracebackType
 from warnings import warn
 
 import serial  # type: ignore
@@ -146,7 +147,7 @@ class Twelite(Thread):
     # Private varibles
 
     # pyserial instance
-    __serial: Any = None
+    __serial: serial.Serial | None = None
 
     # Rx binary data buffer
     __buffer: bytearray
@@ -231,12 +232,35 @@ class Twelite(Thread):
 
     def __del__(self) -> None:
         """Destructor"""
+        self.close()
 
+    def __enter__(self) -> Self:
+        """Enter the runtime context related to this object."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> bool | None:
+        """Exit the runtime context and close the connection."""
+        self.close()
+        return None
+
+    def close(self) -> None:
+        """Close the serial port if opened"""
         if self.__serial is not None:
             if self.__running:
                 self.stop()
             if self.__serial.is_open:
                 self.__serial.close()
+
+    def clear_input(self) -> None:
+        """Clear input buffer of serial and packets"""
+        if self.__serial is not None and self.__serial.is_open:
+            self.__serial.reset_input_buffer()
+        self.__buffer.clear()
 
     @staticmethod
     def set_timezone(tz: tzinfo | None) -> None:
