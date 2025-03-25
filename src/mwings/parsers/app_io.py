@@ -99,7 +99,7 @@ class PacketParser(common.PacketParserBase):
             "packet_type": common.PacketType.APP_IO,
             "sequence_number": bare_packet.u16_at(10),
             "source_serial_id": bare_packet.u32_at(5),
-            "source_logical_id": bare_packet.u8_at(9),
+            "source_logical_id": bare_packet.u8_at(0),
             "lqi": bare_packet.u8_at(4),
             "supply_voltage": None,  # There's no ADC
             "relay_count": bare_packet.u8_at(12),
