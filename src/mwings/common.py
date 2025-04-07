@@ -1345,6 +1345,8 @@ class ParsedPacketBase(ABC, BaseModel):
             return lid
         elif lid in range(120, 128):
             return lid
+        elif lid in (0xFE, 0xFF):
+            return lid
         else:
             raise ValueError("must be in range (0-100) or (120-127)")
 
