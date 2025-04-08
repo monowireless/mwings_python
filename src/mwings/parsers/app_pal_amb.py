@@ -29,10 +29,18 @@ class ParsedPacket(common.ParsedPacketBase):
         Illuminance in lux
     """
 
-    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3700)
-    temp_100x: common.Int16 = Field(default=0, ge=-4000, le=12500)
-    humid_100x: common.UInt16 = Field(default=0, ge=0, le=10000)
-    illuminance: common.UInt32 = Field(default=0, ge=0, le=157000)
+    ai1_voltage: common.UInt16 = Field(
+        default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(3700)
+    )
+    temp_100x: common.Int16 = Field(
+        default=common.Int16(0), ge=common.Int16(-4000), le=common.Int16(12500)
+    )
+    humid_100x: common.UInt16 = Field(
+        default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(10000)
+    )
+    illuminance: common.UInt32 = Field(
+        default=common.UInt32(0), ge=common.UInt32(0), le=common.UInt32(157000)
+    )
 
 
 @final

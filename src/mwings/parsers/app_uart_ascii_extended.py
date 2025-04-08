@@ -31,8 +31,12 @@ class ParsedPacket(common.ParsedPacketBase):
         Data body in ASCII string
     """
 
-    destination_serial_id: common.UInt32 = Field(default=0x78, ge=0, le=0xFFFFFFFF)
-    command_id: common.UInt8 = Field(default=0x00, ge=0, lt=0x80)
+    destination_serial_id: common.UInt32 = Field(
+        default=common.UInt32(0x78), ge=common.UInt32(0), le=common.UInt32(0xFFFFFFFF)
+    )
+    command_id: common.UInt8 = Field(
+        default=common.UInt8(0x00), ge=common.UInt8(0), lt=common.UInt8(0x80)
+    )
     data: bytes = Field(default=bytes(), exclude=True)
 
     @computed_field

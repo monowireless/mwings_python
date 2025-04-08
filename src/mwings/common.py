@@ -421,7 +421,7 @@ class Float32(float, DtypedDecimal):
     def __new__(cls, value: float | None = None) -> Float32:
         if value is None:
             value = 0.0
-        if not (1.17549435e-38 <= value <= 3.40282347e38):
+        if not (-3.4028235e38 <= value <= 3.4028235e38):
             raise ValueError("The given value is out of the range")
         return super(Float32, cls).__new__(cls, value)
 
@@ -442,7 +442,7 @@ class Float64(float, DtypedDecimal):
     def __new__(cls, value: float | None = None) -> Float64:
         if value is None:
             value = 0.0
-        if not (1.7976931348623157e308 <= value <= 2.2250738585072014e-308):
+        if not (-1.7976931348623157e308 <= value <= 1.7976931348623157e308):
             raise ValueError("The given value is out of the range")
         return super(Float64, cls).__new__(cls, value)
 
@@ -1033,10 +1033,10 @@ class AppPalNoticeRGBWColor(BaseModel):
         White value 0-0xF
     """
 
-    red: UInt8 = Field(default=0, ge=0, le=0xF)
-    green: UInt8 = Field(default=0, ge=0, le=0xF)
-    blue: UInt8 = Field(default=0, ge=0, le=0xF)
-    white: UInt8 = Field(default=0xF, ge=0, le=0xF)
+    red: UInt8 = Field(default=UInt8(0), ge=UInt8(0), le=UInt8(0xF))
+    green: UInt8 = Field(default=UInt8(0), ge=UInt8(0), le=UInt8(0xF))
+    blue: UInt8 = Field(default=UInt8(0), ge=UInt8(0), le=UInt8(0xF))
+    white: UInt8 = Field(default=UInt8(0xF), ge=UInt8(0), le=UInt8(0xF))
 
     def u16(self) -> UInt16:
         """Returns UInt16 representation
@@ -1270,10 +1270,12 @@ class ParsedPacketBase(ABC, BaseModel):
 
     packet_type: PacketType = Field(default=PacketType.BARE)
     sequence_number: UInt16 | None = Field(default=None, ge=0, le=0xFFFF)
-    source_serial_id: UInt32 = Field(default=0, ge=0, le=0xFFFFFFFF)
-    source_logical_id: UInt8 = Field(default=0)
-    lqi: UInt8 | None = Field(default=None, ge=0, le=255)
-    supply_voltage: UInt16 | None = Field(default=None, ge=0, le=0xFFFF)
+    source_serial_id: UInt32 = Field(
+        default=UInt32(0), ge=UInt32(0), le=UInt32(0xFFFFFFFF)
+    )
+    source_logical_id: UInt8 = Field(default=UInt8(0))
+    lqi: UInt8 | None = Field(default=None, ge=UInt8(0), le=UInt8(255))
+    supply_voltage: UInt16 | None = Field(default=None, ge=UInt16(0), le=UInt16(0xFFFF))
 
     @computed_field
     def mwings_implementation(self) -> str:
@@ -1616,7 +1618,7 @@ class CommandBase(ABC, BaseModel):
 
     model_config = ConfigDict()
 
-    destination_logical_id: UInt8 = Field(default=0x78)
+    destination_logical_id: UInt8 = Field(default=UInt8(0x78))
 
     @abstractmethod
     def is_valid(self) -> bool:

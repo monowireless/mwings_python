@@ -24,7 +24,9 @@ class Command(common.CommandBase):
         Data to send
     """
 
-    command_id: common.UInt8 = Field(default=0, ge=0, lt=0x80)
+    command_id: common.UInt8 = Field(
+        default=common.UInt8(0), ge=common.UInt8(0), lt=common.UInt8(0x80)
+    )
     data: bytes = Field(min_length=1, max_length=80)
 
     @override

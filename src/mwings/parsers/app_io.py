@@ -29,7 +29,9 @@ class ParsedPacket(common.ParsedPacketBase):
         Interrupt state for each DI ports; True if detected via ISR
     """
 
-    relay_count: common.UInt8 = Field(default=0, ge=0, le=3)
+    relay_count: common.UInt8 = Field(
+        default=common.UInt8(0), ge=common.UInt8(0), le=common.UInt8(3)
+    )
     di_state: common.CrossSectional[bool] = Field(
         default=common.CrossSectional[bool](12, [False for _ in range(12)])
     )

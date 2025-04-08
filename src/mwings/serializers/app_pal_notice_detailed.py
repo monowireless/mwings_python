@@ -30,9 +30,15 @@ class Command(common.CommandBase):
     """
 
     color: common.AppPalNoticeRGBWColor = Field(default=common.AppPalNoticeRGBWColor())
-    blink_duty_percentage: common.UInt8 = Field(default=100, ge=0, le=100)
-    blink_period_in_sec: common.Float64 = Field(default=1.0, ge=0.0, le=10.2)
-    duration_in_sec: common.UInt8 = Field(default=1, le=0xFF)
+    blink_duty_percentage: common.UInt8 = Field(
+        default=common.UInt8(100), ge=common.UInt8(0), le=common.UInt8(100)
+    )
+    blink_period_in_sec: common.Float64 = Field(
+        default=common.Float64(1.0), ge=common.Float64(0.0), le=common.Float64(10.2)
+    )
+    duration_in_sec: common.UInt8 = Field(
+        default=common.UInt8(1), le=common.UInt8(0xFF)
+    )
 
     @override
     def is_valid(self) -> bool:

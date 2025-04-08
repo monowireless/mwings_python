@@ -33,8 +33,12 @@ class Command(common.CommandBase):
     blink_speed: common.AppPalNoticeBlinkSpeed = Field(
         default=common.AppPalNoticeBlinkSpeed.ALWAYS_ON
     )
-    brightness: common.UInt8 = Field(default=0x8, ge=0, le=0xF)
-    duration_in_sec: common.UInt8 = Field(default=5, ge=0, le=0xFF)
+    brightness: common.UInt8 = Field(
+        default=common.UInt8(0x8), ge=common.UInt8(0), le=common.UInt8(0xF)
+    )
+    duration_in_sec: common.UInt8 = Field(
+        default=common.UInt8(5), ge=common.UInt8(0), le=common.UInt8(0xFF)
+    )
 
     @field_serializer("color")
     def serialize_color(self, color: common.AppPalNoticeColor) -> str:

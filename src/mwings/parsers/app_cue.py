@@ -39,8 +39,12 @@ class ParsedPacket(common.ParsedPacketBase):
         True if the magnet state was changed
     """
 
-    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3600)
-    sample_count: common.UInt8 = Field(default=10, ge=10, le=10)
+    ai1_voltage: common.UInt16 = Field(
+        default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(3600)
+    )
+    sample_count: common.UInt8 = Field(
+        default=common.UInt8(10), ge=common.UInt8(10), le=common.UInt8(10)
+    )
     samples_x: common.TimeSeries[common.Int16] = Field(
         default=common.TimeSeries[common.Int16](
             10, [common.Int16(0) for _ in range(10)]

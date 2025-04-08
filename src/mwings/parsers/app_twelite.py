@@ -33,8 +33,10 @@ class ParsedPacket(common.ParsedPacketBase):
         Voltage in mV for each analog interfaces
     """
 
-    destination_logical_id: common.UInt8 = Field(default=0x78)
-    relay_count: common.UInt8 = Field(default=0, ge=0, le=3)
+    destination_logical_id: common.UInt8 = Field(default=common.UInt8(0x78))
+    relay_count: common.UInt8 = Field(
+        default=common.UInt8(0), ge=common.UInt8(0), le=common.UInt8(3)
+    )
     periodic: bool = Field(default=False)
     di_changed: common.CrossSectional[bool] = Field(
         default=common.CrossSectional[bool](4, [False for _ in range(4)])

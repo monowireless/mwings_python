@@ -23,7 +23,9 @@ class Command(common.CommandBase):
         Event id
     """
 
-    event_id: common.UInt8 = Field(default=0, ge=0, le=0x10)
+    event_id: common.UInt8 = Field(
+        default=common.UInt8(0), ge=common.UInt8(0), le=common.UInt8(0x10)
+    )
 
     @override
     def is_valid(self) -> bool:

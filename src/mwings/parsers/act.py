@@ -30,7 +30,9 @@ class ParsedPacket(common.ParsedPacketBase):
         Data body in ASCII string
     """
 
-    command_id: common.UInt8 = Field(default=0x00, ge=0x00, lt=0x7F)
+    command_id: common.UInt8 = Field(
+        default=common.UInt8(0x00), ge=common.UInt8(0x00), lt=common.UInt8(0x7F)
+    )
     data: bytes = Field(default=bytes(), exclude=True)
 
     @computed_field

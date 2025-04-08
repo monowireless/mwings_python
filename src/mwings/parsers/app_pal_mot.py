@@ -33,8 +33,12 @@ class ParsedPacket(common.ParsedPacketBase):
         Sampling frequency in Hz
     """
 
-    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3700)
-    sample_count: common.UInt8 = Field(default=16, ge=16, le=16)
+    ai1_voltage: common.UInt16 = Field(
+        default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(3700)
+    )
+    sample_count: common.UInt8 = Field(
+        default=common.UInt8(16), ge=common.UInt8(16), le=common.UInt8(16)
+    )
     samples_x: common.TimeSeries[common.Int16] = Field(
         default=common.TimeSeries[common.Int16](
             16, [common.Int16(0) for _ in range(16)]
@@ -50,7 +54,7 @@ class ParsedPacket(common.ParsedPacketBase):
             16, [common.Int16(0) for _ in range(16)]
         )
     )
-    sampling_frequency: common.UInt16 = Field(default=25)
+    sampling_frequency: common.UInt16 = Field(default=common.UInt16(25))
 
     @field_validator("sampling_frequency")
     @classmethod

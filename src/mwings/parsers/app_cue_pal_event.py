@@ -25,7 +25,9 @@ class ParsedPacket(common.ParsedPacketBase):
         Accel event
     """
 
-    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3700)
+    ai1_voltage: common.UInt16 = Field(
+        default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(3700)
+    )
     accel_event: common.AccelEvent = Field(default=common.AccelEvent.NONE)
 
     @field_serializer("accel_event")

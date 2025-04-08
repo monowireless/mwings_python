@@ -27,7 +27,9 @@ class ParsedPacket(common.ParsedPacketBase):
         True if the magnet state was changed
     """
 
-    ai1_voltage: common.UInt16 = Field(default=0, ge=0, le=3700)
+    ai1_voltage: common.UInt16 = Field(
+        default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(3700)
+    )
     magnet_state: common.MagnetState = Field(default=common.MagnetState.NOT_DETECTED)
     magnet_state_changed: bool = Field(default=False)
 
