@@ -1,0 +1,31 @@
+name: Lint with mypy / black / ruff
+on: push
+jobs:
+  lint:      
+    runs-on: docker
+    container:
+      image: catthehacker/ubuntu:act-latest
+    steps:
+      - name: Add host to /etc/hosts
+        run: |
+          echo "172.16.1.12 loren2.localnet" >> /etc/hosts
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup python
+        uses: https://github.com/actions/setup-python@v5
+        with:
+          python-version: 3.12.10
+      - name: Setup poetry
+        uses: https://github.com/abatilo/actions-poetry@v2
+        with:
+          poetry-version: 2.1.1
+      - name: Install dependencies using poetry
+        run: poetry install --no-interaction
+      - name: Run black
+        run: poetry run black --check .
+      - name: Run mypy in src
+        run: poetry run mypy src
+      - name: Run mypy in examples/typed
+        run: poetry run mypy examples/typed
+      - name: Run ruff
+        run: poetry run ruff check .
