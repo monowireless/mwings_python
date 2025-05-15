@@ -19,6 +19,8 @@ class ParsedPacket(common.ParsedPacketBase):
 
     Attributes
     ----------
+    router_serial_id: UInt32
+        Serial ID for the first router device (0x80000000 with no routing)
     ai1_voltage: common.UInt16
         Voltage for AI1 port in mV
     sample_count: common.UInt8
@@ -33,6 +35,9 @@ class ParsedPacket(common.ParsedPacketBase):
         Sampling frequency in Hz
     """
 
+    router_serial_id: common.UInt32 = Field(
+        default=common.UInt32(0), ge=common.UInt32(0), le=common.UInt32(0xFFFFFFFF)
+    )
     ai1_voltage: common.UInt16 = Field(
         default=common.UInt16(0), ge=common.UInt16(0), le=common.UInt16(3700)
     )
@@ -168,6 +173,7 @@ class PacketParser(common.PacketParserBase):
             "source_logical_id": bare_packet.u8_at(11),
             "lqi": bare_packet.u8_at(4),
             "supply_voltage": bare_packet.u16_at(19),
+            "router_serial_id": bare_packet.u32_at(0),
             "ai1_voltage": bare_packet.u16_at(25),
             "sample_count": 16,
             "samples_x": common.TimeSeries[common.Int16](
