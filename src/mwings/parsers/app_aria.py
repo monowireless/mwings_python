@@ -48,6 +48,23 @@ class ParsedPacket(common.ParsedPacketBase):
     magnet_state: common.MagnetState = Field(default=common.MagnetState.NOT_DETECTED)
     magnet_state_changed: bool = Field(default=False)
 
+    @field_serializer("router_serial_id")
+    def serialize_router_serial_id(self, router_serial_id: common.UInt32) -> str:
+        """Print router_serial_id in HEX for JSON or something
+
+        Parameters
+        ----------
+        router_serial_id : common.UInt32
+            Router serial ID
+
+        Returns
+        -------
+        str
+            Serialized text for JSON or something
+        """
+
+        return router_serial_id.hex().upper()
+
     @field_serializer("magnet_state")
     def serialize_magnet_state(self, magnet_state: common.MagnetState) -> str:
         """Print magnet_state in readable names for JSON or something

@@ -35,6 +35,23 @@ class ParsedPacket(common.ParsedPacketBase):
     )
     accel_event: common.AccelEvent = Field(default=common.AccelEvent.NONE)
 
+    @field_serializer("router_serial_id")
+    def serialize_router_serial_id(self, router_serial_id: common.UInt32) -> str:
+        """Print router_serial_id in HEX for JSON or something
+
+        Parameters
+        ----------
+        router_serial_id : common.UInt32
+            Router serial ID
+
+        Returns
+        -------
+        str
+            Serialized text for JSON or something
+        """
+
+        return router_serial_id.hex().upper()
+
     @field_serializer("accel_event")
     def serialize_accel_event(self, accel_event: common.AccelEvent) -> str:
         """Print accel_event in readable names for JSON or something

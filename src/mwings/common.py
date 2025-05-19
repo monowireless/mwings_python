@@ -1408,23 +1408,6 @@ class ParsedPacketBase(ABC, BaseModel):
 
         return source_serial_id.hex().upper()
 
-    @field_serializer("router_serial_id")
-    def serialize_router_serial_id(self, router_serial_id: UInt32) -> str:
-        """Print router_serial_id in HEX for JSON or something
-
-        Parameters
-        ----------
-        router_serial_id : UInt32
-            Router serial ID
-
-        Returns
-        -------
-        str
-            Serialized text for JSON or something
-        """
-
-        return router_serial_id.hex().upper()
-
     def to_dict(
         self,
         include: set[str] | None = None,

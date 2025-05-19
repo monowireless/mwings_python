@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Any, final
 
 from overrides import override
-from pydantic import Field
+from pydantic import Field, field_serializer
 
 from .. import common
 
@@ -46,6 +46,23 @@ class ParsedPacket(common.ParsedPacketBase):
     illuminance: common.UInt32 = Field(
         default=common.UInt32(0), ge=common.UInt32(0), le=common.UInt32(157000)
     )
+
+    @field_serializer("router_serial_id")
+    def serialize_router_serial_id(self, router_serial_id: common.UInt32) -> str:
+        """Print router_serial_id in HEX for JSON or something
+
+        Parameters
+        ----------
+        router_serial_id : common.UInt32
+            Router serial ID
+
+        Returns
+        -------
+        str
+            Serialized text for JSON or something
+        """
+
+        return router_serial_id.hex().upper()
 
 
 @final
