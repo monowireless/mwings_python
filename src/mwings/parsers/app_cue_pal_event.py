@@ -135,7 +135,9 @@ class PacketParser(common.PacketParserBase):
             "router_serial_id": bare_packet.u32_at(0),
             "ai1_voltage": bare_packet.u16_at(40),
             "accel_event": common.AccelEvent(
-                bare_packet.u8_at(26) if bare_packet.u8_at(24) == 0x04 else 0xFF
+                bare_packet.u8_at(26)
+                if bare_packet.u8_at(24) == 0x04 and bare_packet.u8_at(26) != 0
+                else 0xFF
             ),
         }
         return ParsedPacket(**parsed_packet_data)
