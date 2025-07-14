@@ -568,10 +568,10 @@ class Twelite(Thread):
         if not utils.is_initialized(self.__serial):
             return None
 
-        # Process a byte in the buffer
-        if utils.is_readable(self.__serial):
+        # Process all bytes in the buffer
+        while self.__serial.in_waiting > 0:
             # Parse a read character
-            result = self.__parse(int.from_bytes(self.__serial.read()))
+            result = self.__parse(self.__serial.read())
             if result is not None:
                 # When parsed a complete packet
                 return result
